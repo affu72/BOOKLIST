@@ -1,25 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import BookList from "./Components/BookList";
+import Header from "./Components/Header";
+import NewBook from "./Components/NewBook";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [data, setData] = useState([]);
+
+  const newBookHandler = function () {};
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header></Header>
+      <div className="main">
+        <NewBook onSubmit={newBookHandler} />
+        <BookList />
+      </div>
     </div>
   );
 }
-
-export default App;

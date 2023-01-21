@@ -5,15 +5,20 @@ import NewBook from "./Components/NewBook";
 import "./App.css";
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [book, setBook] = useState([]);
+  const [editBook, setEditBook] = useState();
+  const [deleteBook, setDeleteBook] = useState();
 
-  const newBookHandler = function () {};
+  const newBookHandler = function (data) {
+    console.log(data);
+    setBook((prevData) => [data, ...prevData]);
+  };
   return (
     <div>
       <Header></Header>
       <div className="main">
         <NewBook onSubmit={newBookHandler} />
-        <BookList />
+        <BookList books={book} />
       </div>
     </div>
   );

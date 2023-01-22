@@ -9,9 +9,10 @@ import { useEffect } from "react";
 export default function App() {
   const [books, setBooks] = useState([]);
 
-  const newBookHandler = async function (data) {
+  const newBookHandler = async function ({ title }) {
+    console.log(title);
     const response = await axios.post("http://localhost:3001/books", {
-      title: data.title,
+      title,
     });
 
     setBooks((prevData) => [response.data, ...prevData]);
@@ -27,9 +28,13 @@ export default function App() {
     fetchBook();
   }, []);
 
-  const editBookHandler = (newtitle, id) => {
+  const editBookHandler = async (newtitle, id) => {
+    const response = await axios.put(`http://localhost:3001/books/${id}`, {
+      title: newtitle,
+    });
+
     const updatedBook = books.map((book) => {
-      if (id === book.id) return { ...book, title: newtitle };
+      if (id === book.id) return { ...book, ...response.data };
 
       return book;
     });
@@ -37,10 +42,13 @@ export default function App() {
     setBooks(updatedBook);
   };
 
-  const deleteBookHandler = (id) => {
+  const deleteBookHandler = async (id) => {
+    await axios.delete(`http://localhost:3001/books/${id}`);
+
     const updatedBook = books.filter((book) => {
       return id !== book.id;
     });
+
     setBooks(updatedBook);
   };
 
